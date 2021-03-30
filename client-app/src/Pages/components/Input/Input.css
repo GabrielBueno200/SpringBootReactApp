@@ -1,0 +1,16 @@
+.custom-field{
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+}
+
+.mid-width{
+    width: 50%;
+}
+
+.custom-field input{
+    height: 2em;
+    margin-top: .5em;
+    border: .5px solid #000000;
+    border-radius: 5px;
+}

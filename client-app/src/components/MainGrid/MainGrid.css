@@ -1,0 +1,39 @@
+:root {
+    --header-height: 10%;
+    --aside-width: 20%;
+    --footer-height: 8%;
+}
+
+
+.main-grid{
+    display: grid;
+    grid-template-areas: 
+       'header header'
+       'navbar content'
+       'footer footer';
+    grid-template-columns: var(--aside-width) 1fr;
+    grid-template-rows: 
+        var(--header-height)
+        1fr
+        var(--footer-height);
+    height: 100vh;
+    width: 100vw;
+}
+
+.side-navbar{
+    grid-area: navbar;
+}
+
+.page-footer{
+    grid-area: footer;
+}
+
+.page-header{
+    grid-area: header;
+}
+
+
+.container{
+    grid-area: content;
+    padding: 1em;
+}

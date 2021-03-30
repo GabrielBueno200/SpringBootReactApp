@@ -1,0 +1,11 @@
+.pet_register_fields{
+    display: flex;
+    margin-bottom: 2em;
+}
+
+.custom-field select{
+    height: 2em;
+    margin-top: .5em;
+    border-radius: .5em;
+    border: 1px solid #000000;
+}

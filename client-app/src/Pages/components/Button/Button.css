@@ -1,0 +1,27 @@
+.btn{
+    display: flex;
+    outline: none;
+    border: none;
+    padding: .5em;
+    border-radius: 5px;
+    font-size: 1em;
+    align-items: center;
+}
+
+.btn-warning{
+    background-color: #FFCE00;
+    color: #000000;
+    border: 1px solid #d8af08;
+}
+
+.btn-primary{
+    background-color: #382ADC;
+    color: #FFFFFF;
+    border: 1px solid #191189;
+}
+
+.btn-danger{
+    background-color: #f92a31;
+    color: #FFFFFF;
+    border: 1px solid #aa0606;
+}

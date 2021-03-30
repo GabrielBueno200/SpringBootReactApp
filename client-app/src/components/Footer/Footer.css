@@ -1,0 +1,10 @@
+.page-footer{
+    display: flex;
+    align-items: center;
+    padding: 1em;
+    background-color: #343940;
+    color: #FFFFFF;
+    box-sizing: border-box;
+}
+
+

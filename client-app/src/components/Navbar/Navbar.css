@@ -1,0 +1,19 @@
+.side-navbar{
+    display: flex;
+    flex-direction: column;
+    background-color: #212429;
+}
+
+.side-navbar a{
+    text-decoration: none;
+    color: white;
+}
+
+.navbar-items, .submenu-items{
+    list-style: none;
+}
+
+.navbar-items{
+    padding: 1.5em;
+}
+

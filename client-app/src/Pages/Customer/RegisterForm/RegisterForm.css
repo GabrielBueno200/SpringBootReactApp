@@ -1,0 +1,12 @@
+.customer_register_fields{
+    display: flex;
+    margin-bottom: 2em;
+}
+
+.column-1{
+    margin-right: 1em;
+}
+
+.street_field{
+    display: flex;
+}

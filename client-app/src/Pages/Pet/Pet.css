@@ -1,0 +1,14 @@
+/*Others elements*/
+.customer-filtering{
+    margin: 2em 0 2em 0;
+}
+
+.customer-filtering .buttons{
+    display: flex;
+    flex-direction: row;
+    margin-top: 1em;
+}
+
+.customer-filtering .btn{
+    margin-right: 1em;
+}
