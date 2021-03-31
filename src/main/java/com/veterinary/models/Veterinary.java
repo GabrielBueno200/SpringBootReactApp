@@ -9,8 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name="db_veterinary")
+@Getter @Setter
 public class Veterinary extends Person implements Serializable {
 
 
@@ -24,21 +28,6 @@ public class Veterinary extends Person implements Serializable {
 	private String CRV;
 	
 	private String speciality;
-	
-	
-	//Getters and Setters
-	public long getId() {
-		return Id;
-	}
-
-	public String getCRV() {
-		return CRV;
-	}
-
-	public String getSpeciality() {
-		return speciality;
-	}
-	
 	
 
 }

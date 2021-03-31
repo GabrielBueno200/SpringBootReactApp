@@ -6,6 +6,7 @@ export interface IAddress{
 }
 
 export interface ICustomer{
+    id?: number,
     name: string
     address: IAddress,
     cpf: string,

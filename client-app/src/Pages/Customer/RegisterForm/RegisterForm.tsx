@@ -1,7 +1,9 @@
-import React, {useState, ChangeEvent} from 'react';
+import React, {useState, ChangeEvent, useContext} from 'react';
 import { useForm } from "react-hook-form";
+import { observer } from 'mobx-react-lite';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
+import CustomerStoreContext from '../../../services/stores/CustomersStore';
 
 import './RegisterForm.css';
 
@@ -11,19 +13,14 @@ import {ICustomerForm, ICustomer} from '../../../services/models';
 const CustomerRegisterForm:React.FC = () => {
 
     const { register, handleSubmit, watch, errors } = useForm<ICustomerForm>();
+    
+    const customerStore = useContext(CustomerStoreContext);
+
+    const { saveCustomer } = customerStore;
 
     const onSubmit = handleSubmit( (data:ICustomerForm) => {
-
-        console.log(data)
-        /*const newCustomer:ICustomer = {
-            name: data.name,
-            cpf: data.cpf,
-            phoneNumber: data.phoneNumber
-            address: {
-                street: data.street,
-                number: data.number
-            }*/
-        });
+        saveCustomer(data);
+    });
 
     return (
         <form onSubmit={onSubmit}>
@@ -123,4 +120,4 @@ const CustomerRegisterForm:React.FC = () => {
     )
 }
 
-export default CustomerRegisterForm;
+export default observer(CustomerRegisterForm);

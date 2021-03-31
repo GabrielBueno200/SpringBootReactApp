@@ -4,54 +4,26 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.MappedSuperclass;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Getter;
+import lombok.Setter;
+
 @MappedSuperclass
+@Getter @Setter
 public abstract class Person {
 	
 	protected String name;
 	
 	@Column(name="CPF", unique=true)
+	@JsonProperty("cpf")
 	protected String personDocument;
 
 	@Embedded
 	protected Address address;
 	
 	@Column(name="phone_number")
-	private String phoneNumber;
+	protected String phoneNumber;
 
-	
-	//Getters and Setters
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPersonDocument() {
-		return personDocument;
-	}
-
-	public void setPersonDocument(String personDocument) {
-		this.personDocument = personDocument;
-	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	
 	
 }

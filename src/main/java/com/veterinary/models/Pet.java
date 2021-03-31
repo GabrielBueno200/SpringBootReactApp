@@ -3,7 +3,6 @@ package com.veterinary.models;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -40,7 +39,6 @@ public class Pet implements Serializable{
 	
 	@NotBlank(message="Pet must to have an owner ")
 	@OneToOne(cascade = CascadeType.ALL)
-	@Column(name="owner_id")
 	@JoinColumn(name="Id", nullable=false)
 	private Customer owner;
 	

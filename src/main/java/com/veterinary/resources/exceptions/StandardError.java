@@ -2,6 +2,7 @@ package com.veterinary.resources.exceptions;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 
 import lombok.NoArgsConstructor;
 
