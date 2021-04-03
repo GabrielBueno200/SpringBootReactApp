@@ -1,4 +1,5 @@
-import React, {useState, ChangeEvent} from 'react';
+import React, {useState, Fragment, useEffect} from 'react';
+import { observer } from 'mobx-react-lite';
 
 //components
 import MainGrid from '../../components/MainGrid/MainGrid';
@@ -6,35 +7,66 @@ import Input from '../components/Input/Input';
 import Button from '../components/Button/Button';
 import Modal from '../components/Modal/Modal';
 import Table from '../components/Table/Table'
-import CustomerRegisterForm from './RegisterForm/RegisterForm';
-import {AiOutlineSearch} from 'react-icons/ai';
-import {IoMdAddCircleOutline} from 'react-icons/io';
-
+import CustomerRegisterForm from './Forms/RegisterForm/RegisterForm';
+import CustomerEditForm from './Forms/EditForm/EditForm';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { IoMdAddCircleOutline } from 'react-icons/io';
+import { useStore } from '../../services/stores/stores';
 
 //css
 import './Customer.css';
+import { ICustomer } from '../../services/models/customer';
 
 
-const Customer:React.FC = () => {
+const Customer:React.FC = observer(() => {
 
-    const [customerName, setCustomerName] = useState('')
+    const { customerStore } = useStore();
+    const { fetchCustomers } = customerStore;
+
+    useEffect(() => {
+        fetchCustomers()
+    }, [fetchCustomers]);
+
+    const [customerCPF, setCustomerCPF] = useState('')
     const [modalOpened, setModalOpened] = useState(false);
+    const [userAction, setUserAction] = useState<'registering' | 'editing' | null>(null);
+
+    const modalHandler = (userActionToggler:() => void) => {
+        userActionToggler();
+        setModalOpened(true);
+    }
 
 
-    const costumerNameHandler = (e:ChangeEvent):void => {
+    const costumerCPFHandler = (e:React.ChangeEvent) => {
         const value: string = (e.target as HTMLInputElement).value;
 
-        setCustomerName(value);
-    } 
+        if (!value.length)
+            fetchCustomers();
+
+        setCustomerCPF(value);
+    }
+
+    const searchCustomerHandler = () => {
+        customerStore.findCustomerByCpf(customerCPF);
+    }
+
+    const modalCloserHandler = () => {
+        setModalOpened(false);
+        customerStore.cleanWarnings();
+    }
 
     return(
+        <Fragment>
 
-        <>
             {modalOpened ? 
-                <Modal Entity="cliente" onClose={() => setModalOpened(false)}>
-                    <CustomerRegisterForm/>
-                </Modal> : null
-            }
+
+                <Modal title={`${userAction === 'registering' ? 'Cadastro' : 'Edição'} Cliente`} onClose={() => modalCloserHandler()}>
+                        {userAction === 'registering' ? <CustomerRegisterForm/>
+                        : userAction === 'editing' ? <CustomerEditForm/> 
+                        : null}
+                    </Modal>
+                
+            : null}
 
             <MainGrid pageTitle="Clientes > Visualizar">
 
@@ -43,20 +75,20 @@ const Customer:React.FC = () => {
                     <Input 
                         type="text" 
                         name="customer" 
-                        placeholder="Nome" 
-                        labelText="Nome do cliente" 
-                        change={costumerNameHandler}
-                        value={customerName}
+                        placeholder="CPF" 
+                        labelText="CPF do cliente" 
+                        change={costumerCPFHandler}
+                        value={customerCPF}
                         customClass="mid-width"
                     />
 
 
                     <div className="buttons">
-                        <Button customClass="btn-primary">
+                        <Button customClass="btn-primary" click={() => searchCustomerHandler()}>
                             <AiOutlineSearch/>Consultar
                         </Button>
 
-                        <Button customClass="btn-warning" click={() => setModalOpened(true)}>
+                        <Button customClass="btn-warning" click={() => modalHandler(() => setUserAction('registering'))}>
                             <IoMdAddCircleOutline/>Novo
                         </Button>
                     </div>
@@ -64,64 +96,60 @@ const Customer:React.FC = () => {
 
                 </div>
 
-                <Table>
-                    <thead>
-                        <th>Nome</th>
-                        <th>CPF</th>
-                        <th>Endereço</th>
-                        <th>Telefone</th>
-                        <th>Ações</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Gabriel Bueno</td>
-                            <td>448.148.398.98</td>
-                            <td>Avenida Benvenuto Bagnara, 321 - Jardim Zaíra - Mauá </td>
-                            <td>11 99504-5397</td>
-                            <td style={{display: "flex", justifyContent: "center"}}>
-                                <Button customClass="btn-primary">Editar</Button>
-                                <Button customClass="btn-danger">Deletar</Button>
-                            </td>
-                        </tr>
+                <div className="customer-data">
 
-                        <tr>
-                            <td>Gabriel Bueno</td>
-                            <td>448.148.398.98</td>
-                            <td>Avenida Benvenuto Bagnara, 321 - Jardim Zaíra - Mauá </td>
-                            <td>11 99504-5397</td>
-                            <td style={{display: "flex", justifyContent: "center"}}>
-                                <Button customClass="btn-primary">Editar</Button>
-                                <Button customClass="btn-danger">Deletar</Button>
-                            </td>
-                        </tr>
+                    {
+                    
+                        customerStore.customerSearchWarning != null ?
 
-                        <tr>
-                            <td>Gabriel Bueno</td>
-                            <td>448.148.398.98</td>
-                            <td>Avenida Benvenuto Bagnara, 321 - Jardim Zaíra - Mauá </td>
-                            <td>11 99504-5397</td>
-                            <td style={{display: "flex", justifyContent: "center"}}>
-                                <Button customClass="btn-primary">Editar</Button>
-                                <Button customClass="btn-danger">Deletar</Button>
-                            </td>
-                        </tr>
+                            <span>{customerStore.customerSearchWarning.message}</span>
 
-                        <tr>
-                            <td>Gabriel Bueno</td>
-                            <td>448.148.398.98</td>
-                            <td>Avenida Benvenuto Bagnara, 321 - Jardim Zaíra - Mauá </td>
-                            <td>11 99504-5397</td>
-                            <td style={{display: "flex", justifyContent: "center"}}>
-                                <Button customClass="btn-primary">Editar</Button>
-                                <Button customClass="btn-danger">Deletar</Button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </Table>
+                        :
+                        <Table>
+                            <thead>
+                                <th>Nome</th>
+                                <th>CPF</th>
+                                <th>Endereço</th>
+                                <th>Telefone</th>
+                                <th>Ações</th>
+                            </thead>
+                            
+                            <tbody>
+                                {
+
+                                    customerStore.loadedCustomers!.map((customer:ICustomer) => {
+
+                                        const {street, number, neighbourhood, city} = customer.address;
+
+                                        return (
+                                            <tr key={customer.id}>
+                                                <td>{customer.name}</td>
+                                                <td>{customer.cpf}</td>
+                                                <td>{`${street}, ${number} - ${neighbourhood} - ${city}`}</td>
+                                                <td>{customer.phoneNumber}</td>
+                                                <td style={{display: "flex", justifyContent: "center"}}>
+                                                    <Button click={() => modalHandler(() => {setUserAction('editing'); customerStore.setCustomer(customer.id!)})} 
+                                                            customClass="btn-primary" >
+                                                        Editar
+                                                    </Button>
+                                                    <Button click={() => customerStore.deleteCustomer(customer.id!)} customClass="btn-danger">Deletar</Button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
+                                }
+
+                            </tbody>
+
+                        </Table>
+                    }
+                    
+                </div>
 
             </MainGrid>
-        </>
+
+        </Fragment>
     )
-}
+})
 
 export default Customer;

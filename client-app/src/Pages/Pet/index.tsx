@@ -30,7 +30,7 @@ const Pet:React.FC = () => {
     return(
         <>
         {modalOpened ? 
-            <Modal Entity="animal" onClose={() => setModalOpened(false)}>
+            <Modal title="animal" onClose={() => setModalOpened(false)}>
                 <PetRegisterForm/>
             </Modal> 
         : null}

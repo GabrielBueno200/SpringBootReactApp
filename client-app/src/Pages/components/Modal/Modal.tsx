@@ -11,13 +11,13 @@ import './Modal.css';
 
 
 interface IProps{
-    Entity: string,
+    title: string,
     onClose: () => void,
     onSubmit?: () => void
 }
 
 
-const Modal:React.FC<IProps> = ({Entity, onClose, onSubmit, children}) => {
+const Modal:React.FC<IProps> = ({title, onClose, onSubmit, children}) => {
 
 
     return (
@@ -25,7 +25,7 @@ const Modal:React.FC<IProps> = ({Entity, onClose, onSubmit, children}) => {
 
             <div className="modal">
 
-                <h5 className="modal-title">Novo {Entity}</h5>
+                <h5 className="modal-title">{title}</h5>
 
     
 

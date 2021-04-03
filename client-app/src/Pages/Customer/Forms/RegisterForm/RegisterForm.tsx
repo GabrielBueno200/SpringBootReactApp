@@ -1,29 +1,29 @@
-import React, {useState, ChangeEvent, useContext} from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from "react-hook-form";
-import { observer } from 'mobx-react-lite';
-import Input from '../../components/Input/Input';
-import Button from '../../components/Button/Button';
-import CustomerStoreContext from '../../../services/stores/CustomersStore';
+import Input from '../../../components/Input/Input';
+import Button from '../../../components/Button/Button';
+import { useStore } from '../../../../services/stores/stores';
 
-import './RegisterForm.css';
+import '../CustomerForm.css';
 
 //interfaces
-import {ICustomerForm, ICustomer} from '../../../services/models';
+import { ICustomerForm } from '../../../../services/models/customer';
 
 const CustomerRegisterForm:React.FC = () => {
 
     const { register, handleSubmit, watch, errors } = useForm<ICustomerForm>();
     
-    const customerStore = useContext(CustomerStoreContext);
-
-    const { saveCustomer } = customerStore;
+    const { customerStore } = useStore();
 
     const onSubmit = handleSubmit( (data:ICustomerForm) => {
-        saveCustomer(data);
+        customerStore.saveCustomer(data);
     });
 
     return (
         <form onSubmit={onSubmit}>
+
+            {customerStore.customerRegisteringWarning !== null? 
+            customerStore.customerRegisteringWarning.message : null}
 
             <div className="customer_register_fields">
 
@@ -84,7 +84,7 @@ const CustomerRegisterForm:React.FC = () => {
                                 ref={register({required: true})} 
                                 type="number"  name="number" 
                                 placeholder="Nº"
-                                style={{width: "30px", marginLeft: "5px"}}
+                                style={{width: "50px", marginLeft: "5px"}}
                             />
                             {errors.number && <span>Este campo é obrigatório</span>}
                         </div>
@@ -118,6 +118,6 @@ const CustomerRegisterForm:React.FC = () => {
 
         </form>
     )
-}
+};
 
-export default observer(CustomerRegisterForm);
+export default CustomerRegisterForm;

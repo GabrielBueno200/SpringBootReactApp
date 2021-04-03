@@ -6,7 +6,7 @@ import Button from '../../components/Button/Button';
 import './RegisterForm.css';
 
 //interfaces
-import {IPetForm} from '../../../services/models';
+import { IPetForm } from '../../../services/models/pet';
 
 const CustomerRegisterForm:React.FC = () => {
 

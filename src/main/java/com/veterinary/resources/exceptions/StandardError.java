@@ -1,15 +1,11 @@
 package com.veterinary.resources.exceptions;
 
-import java.io.Serializable;
 import java.time.Instant;
-import java.util.List;
 
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class StandardError implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+public class StandardError{
 
 	private Instant timestamp;
 	
@@ -20,7 +16,6 @@ public class StandardError implements Serializable{
 	private String error;
 	
 	private String message;
-	
 	
 	
 	//Getters and Setters
@@ -64,8 +59,5 @@ public class StandardError implements Serializable{
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	
-	
 	
 }

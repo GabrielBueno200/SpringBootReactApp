@@ -1,5 +1,5 @@
-import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
-import { ICustomer, ICustomerForm } from '../models';
+import axios, {AxiosResponse} from 'axios';
+import { ICustomer, ICustomerForm } from '../models/customer';
 
 
 axios.defaults.baseURL = 'http://localhost:8080/api/';
@@ -15,8 +15,11 @@ const requests = {
 };
 
 const Customers = {
-    save: (customer:ICustomerForm):Promise<ICustomer> => requests.post('/customers/', customer),
-    findAll: (): Promise<ICustomer[]> => requests.get('/customers')
+    save: (customer:ICustomerForm): Promise<ICustomer> => requests.post('/customers', customer),
+    findAll: (): Promise<ICustomer[]> => requests.get('/customers'),
+    findByCpf: (cpf: string): Promise<ICustomer[]> => requests.get(`/customers/cpf/${cpf}`),
+    updateUser: (customer:ICustomerForm, id:number): Promise<ICustomer> => requests.put(`/customers/${id}`, customer),
+    deleteById: (id:number) => requests.del(`/customers/${id}`)
 }
 
 export default {

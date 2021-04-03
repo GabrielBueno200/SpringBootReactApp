@@ -1,6 +1,6 @@
 package com.veterinary.models;
 
-import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,15 +10,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name="db_pet")
-public class Pet implements Serializable{
-
-	private static final long serialVersionUID = 1L;
+@NoArgsConstructor
+@Getter @Setter
+public class Pet{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -35,69 +40,14 @@ public class Pet implements Serializable{
 	
 	@NotBlank(message="Pet type cannot be null")
 	@Enumerated(value = EnumType.STRING)
-	private AnimalType type;
+	private PetConstants type;
 	
 	@NotBlank(message="Pet must to have an owner ")
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="Id", nullable=false)
+	@ManyToOne
+	@JoinColumn(name="ownerId")
 	private Customer owner;
 	
-	
-	//Getters and Setters
-
-	public long getId() {
-		return Id;
-	}
-
-	public void setId(long id) {
-		Id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getBreed() {
-		return breed;
-	}
-
-	public void setBreed(String breed) {
-		this.breed = breed;
-	}
-
-	public Double getAge() {
-		return age;
-	}
-
-	public void setAge(Double age) {
-		this.age = age;
-	}
-
-	public AnimalType getType() {
-		return type;
-	}
-
-	public void setType(AnimalType type) {
-		this.type = type;
-	}
-
-	public Customer getOwner() {
-		return owner;
-	}
-
-	public void setOwner(Customer owner) {
-		this.owner = owner;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
-	
-	
+	@OneToMany(mappedBy="pet", cascade = CascadeType.ALL)
+	private List<Appointment> appointments;
 	
 }

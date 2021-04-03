@@ -12,7 +12,7 @@
 	<artifactId>veterinaryClinic</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>veterinaryClinic</name>
-	<description>A simple Spring Boot projeto for a veterinary clinic</description>
+	<description>A simple Spring Boot project for a veterinary clinic</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>

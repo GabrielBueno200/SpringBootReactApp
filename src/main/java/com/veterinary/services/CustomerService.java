@@ -24,18 +24,54 @@ public class CustomerService {
 	
 	public Customer findById(long id) {
 		return customerRepository.findById(id).orElseThrow(
-				() -> new EntityNotFoundException("Not found entity with id " + id));
+				() -> new EntityNotFoundException("Não encontrado cliente com o id " + id));
 	}
 	
+	public List<Customer> findByCpf(String cpf) {
+		List<Customer> customers = customerRepository.findByPersonDocumentStartsWith(cpf);
+		
+		if (customers.size() == 0)
+			throw new EntityNotFoundException("Não encontrado cliente com o CPF " + cpf);
+		
+		return customers;
+	}
+	
+	
 	public Customer save(CustomerRequestDTO customer, BindingResult result) {
-		if(result.hasErrors())
+		if(result.hasErrors()) {
 			throw new InvalidDataException(result.getFieldErrors());
+		}
 		
-		Customer castCustomer = new Customer(customer);
+		Customer newCustomer = new Customer(customer);
 		
-		customerRepository.save(castCustomer);
+		customerRepository.save(newCustomer);
 		
-		return castCustomer;
+		return newCustomer;
 		
 	}
+	
+	public Customer updateUser(Long id, CustomerRequestDTO customerDTO, BindingResult result) {
+		if(result.hasErrors()) {
+			throw new InvalidDataException(result.getFieldErrors());
+		}
+		
+		Customer updatedCustomer = this.findById(id);
+		
+		Customer FormData = new Customer(customerDTO);
+		
+		updatedCustomer.setName(FormData.getName());
+		updatedCustomer.setPersonDocument(FormData.getPersonDocument());
+		updatedCustomer.setPhoneNumber(FormData.getPhoneNumber());
+		updatedCustomer.setAddress(FormData.getAddress());
+		
+		customerRepository.save(updatedCustomer);
+		
+		return updatedCustomer;
+		
+	}
+	
+	public void deleteById(Long id) {
+		customerRepository.deleteById(id);
+	}
+	
 }
