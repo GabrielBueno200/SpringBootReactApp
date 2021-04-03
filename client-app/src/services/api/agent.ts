@@ -22,6 +22,11 @@ const Customers = {
     deleteById: (id:number) => requests.del(`/customers/${id}`)
 }
 
+const Pets = {
+    findOwnerByCPF: (cpf: string): Promise<string> => requests.get(`/pets/owner/${cpf}`)
+}
+
 export default {
-    Customers
+    Customers,
+    Pets
 }
