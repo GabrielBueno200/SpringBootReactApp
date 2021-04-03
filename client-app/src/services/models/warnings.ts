@@ -1,5 +1,5 @@
 
 export interface IWarning {
     message: string,
-    type: 'Error' | 'Advice'
+    type: 'Error' | 'Success'
 }

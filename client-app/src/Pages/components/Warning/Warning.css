@@ -1,0 +1,22 @@
+.warning-area{
+    padding: 1em;
+    margin-bottom: 1em ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.warning-area.success-warning{
+    background-color: #b5f2b0;
+    border: 1px solid #135e09;
+    border-radius: 5px;
+    color: #135e09;
+
+}
+
+.warning-area.error-warning{
+    background-color: #f7c8c8;
+    border: 1px solid #b20e0e;
+    border-radius: 5px;
+    color: #b20e0e;
+}

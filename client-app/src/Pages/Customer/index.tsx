@@ -16,11 +16,13 @@ import { useStore } from '../../services/stores/stores';
 //css
 import './Customer.css';
 import { ICustomer } from '../../services/models/customer';
+import ConfirmDialog from '../components/ConfirmDialog/ConfirmDialog';
+import WarningComponent from '../components/Warning/Warning';
 
 
 const Customer:React.FC = observer(() => {
 
-    const { customerStore } = useStore();
+    const { customerStore, warningStore } = useStore();
     const { fetchCustomers } = customerStore;
 
     useEffect(() => {
@@ -35,7 +37,6 @@ const Customer:React.FC = observer(() => {
         userActionToggler();
         setModalOpened(true);
     }
-
 
     const costumerCPFHandler = (e:React.ChangeEvent) => {
         const value: string = (e.target as HTMLInputElement).value;
@@ -61,11 +62,17 @@ const Customer:React.FC = observer(() => {
             {modalOpened ? 
 
                 <Modal title={`${userAction === 'registering' ? 'Cadastro' : 'Edição'} Cliente`} onClose={() => modalCloserHandler()}>
-                        {userAction === 'registering' ? <CustomerRegisterForm/>
-                        : userAction === 'editing' ? <CustomerEditForm/> 
-                        : null}
-                    </Modal>
+                    {userAction === 'registering' ? <CustomerRegisterForm/>
+                    : userAction === 'editing' ? <CustomerEditForm/> 
+                    : null}
+                </Modal>
                 
+            : null}
+
+            {warningStore.warningVisible ? 
+                <ConfirmDialog >
+                    <span>Você tem certeza que deseja deletar este usuário?</span>
+                </ConfirmDialog>
             : null}
 
             <MainGrid pageTitle="Clientes > Visualizar">
@@ -93,7 +100,6 @@ const Customer:React.FC = observer(() => {
                         </Button>
                     </div>
 
-
                 </div>
 
                 <div className="customer-data">
@@ -102,7 +108,7 @@ const Customer:React.FC = observer(() => {
                     
                         customerStore.customerSearchWarning != null ?
 
-                            <span>{customerStore.customerSearchWarning.message}</span>
+                            <WarningComponent warning={customerStore.customerSearchWarning}/>
 
                         :
                         <Table>
@@ -132,7 +138,10 @@ const Customer:React.FC = observer(() => {
                                                             customClass="btn-primary" >
                                                         Editar
                                                     </Button>
-                                                    <Button click={() => customerStore.deleteCustomer(customer.id!)} customClass="btn-danger">Deletar</Button>
+                                                    <Button click={() => warningStore.setWarningAction(() =>customerStore.deleteCustomer(customer.id!))} 
+                                                            customClass="btn-danger">
+                                                        Deletar
+                                                    </Button>
                                                 </td>
                                             </tr>
                                         );

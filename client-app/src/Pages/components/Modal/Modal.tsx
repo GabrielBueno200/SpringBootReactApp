@@ -33,10 +33,6 @@ const Modal:React.FC<IProps> = ({title, onClose, onSubmit, children}) => {
                         {children}
                     </div>
 
-                    <div className="modal-buttons">
-
-                    </div>
-
 
             </div>
             

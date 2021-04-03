@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import Input from '../../../components/Input/Input';
 import Button from '../../../components/Button/Button';
+import WarningComponent from '../../../components/Warning/Warning';
 import { useStore } from '../../../../services/stores/stores';
 
+//css
 import '../CustomerForm.css';
 
 //interfaces
@@ -23,7 +25,9 @@ const CustomerRegisterForm:React.FC = () => {
         <form onSubmit={onSubmit}>
 
             {customerStore.customerRegisteringWarning !== null? 
-            customerStore.customerRegisteringWarning.message : null}
+                <WarningComponent warning={customerStore.customerRegisteringWarning}/>
+            : null}
+
 
             <div className="customer_register_fields">
 

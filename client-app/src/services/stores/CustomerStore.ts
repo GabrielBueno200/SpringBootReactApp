@@ -57,7 +57,7 @@ export default class CustomerStore {
 
                 this.customerRegisteringWarning = {
                     message: "Cadastrado com sucesso!",
-                    type: 'Advice'
+                    type: 'Success'
                 };
             }
     	);
@@ -78,7 +78,7 @@ export default class CustomerStore {
 
                 this.customerEditingWarning = {
                     message: "Editado com sucesso!",
-                    type: 'Advice'
+                    type: 'Success'
                 };
             });
 
@@ -120,7 +120,7 @@ export default class CustomerStore {
             runInAction(() =>
                 this.customerSearchWarning = {
                     message: err.response.data.message,
-                    type: 'Advice' 
+                    type: 'Error' 
             });
         }
     }

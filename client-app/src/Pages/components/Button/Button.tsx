@@ -2,7 +2,7 @@ import React from 'react';
 import './Button.css';
 
 interface IProps{
-    customClass: string,
+    customClass: "btn-primary" | 'btn-danger' | 'btn-warning',
     click?: () => void,
     type?: "button" | "submit" | "reset" | undefined
 }
